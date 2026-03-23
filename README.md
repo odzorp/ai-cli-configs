@@ -1,91 +1,181 @@
-# AI CLI Tools Setup Guide
+# AI CLI Tools - Complete Config Reference
 
-Quick reference for AI coding CLI tools installed on this machine.
-
-> **Note**: Installation commands are intentionally minimal — just tell AI "install X" and it figures out the rest. This doc focuses on **configurations** and **platform quirks** that AI can't guess.
+Complete documentation for all AI CLI tools installed on this machine.
 
 ---
 
-## Tools Overview
+## Table of Contents
 
-| Tool | Command | Status | Notes |
-|------|---------|--------|-------|
-| Claude Code | `claude` | ✅ Ready | Anthropic's official CLI |
-| Codex CLI | `codex` | ✅ Ready | OpenAI's coding agent |
-| OpenCode | `opencode` | ✅ Ready | Built-in to this environment |
-| OpenCLAW | `openclaw` | ✅ Ready | Code inspection CLI |
-| Gemini CLI | `gemini` | ✅ Ready | Google's AI CLI |
-| Qwen | `qwen` | ✅ Ready | Alibaba's coder (NOT `qwen-code` or `qwencode-cli`) |
-| Cline | `cline` | ✅ Ready | VS Code extension + CLI |
-| Cursor | `cursor` | ✅ Ready | AI IDE (GUI-based) |
-| Droid | `droid` | ✅ Ready | Android AI coding |
-| Kilocode | `kilocode` | ✅ Ready | CLI tool |
-| Kiro CLI | `kiro` | ✅ Ready | Amazon Q Developer CLI (requires WSL on Windows) |
-| GitHub Copilot | `copilot` | ✅ Ready | GitHub's AI pair programmer |
-| Sourcegraph Amp | `src` | ✅ Ready | Sourcegraph CLI |
-| Aider | `aider` | ✅ Ready | Terminal-based AI coding |
+1. [OpenCode](#opencode)
+2. [Claude Code](#claude-code)
+3. [Aider](#aider)
+4. [Codex CLI](#codex-cli)
+5. [Other Tools](#other-tools)
 
 ---
 
-## Quick Start
+## OpenCode
 
-```powershell
-# Start Claude Code
+**Command**: `opencode` (built-in)
+
+### Config Location
+`~/.config/opencode/`
+
+### Key Configs
+- `opencode.json` - Main config
+- `AGENTS.md` - 28 agent definitions
+- `skills/` - 115+ skills
+- `commands/` - 59 slash commands
+
+### Key Settings
+- Model: `opencode/big-pickle`
+- MCP: GitHub server configured
+- Plugins: sessions, smart-title, ignore, synced, snippets, notify
+- Permissions: edit=allow, bash=allow
+- Compaction: auto=true, reserved=10000
+
+### Sync
+```bash
+opencode sync --help
+```
+
+---
+
+## Claude Code
+
+**Command**: `claude`
+
+### Config Location
+`~/.claude/settings.json`
+
+### Key Settings
+- 18 plugins enabled
+- Fast Mode: enabled
+- Permissions: Bash, Read, Write, Edit all allowed
+- Security Hook: blocks dangerous commands (rm -rf /, sudo rm, etc.)
+
+### Plugins
+- frontend-design, code-review, context7, superpowers
+- github, feature-dev, code-simplifier, ralph-loop
+- typescript-lsp, playwright, commit-commands
+- claude-md-management, figma, firecrawl
+- hookify, slack, skill-creator, atlassian
+
+---
+
+## Aider
+
+**Command**: `aider`
+
+### Config Location
+`~/.aider.conf.yml`
+
+### Key Settings
+- Model: `openai/gpt-4o`
+- API Base: `https://opencode.ai/zen/v1`
+- Editor: Cursor
+- Edit Format: Diff
+- Dark Mode: enabled
+
+### Usage
+```bash
+aider ./project
+```
+
+---
+
+## Codex CLI
+
+**Command**: `codex`
+
+### Config Location
+`~/.codex/config.toml`
+
+### Key Settings
+- Default Model: `gpt-5.4`
+- Approval Policy: `on-request`
+- Web Search: `live`
+- Personality: `pragmatic`
+- Reasoning Effort: `medium`
+- History: `summarize` at capacity
+
+### Profiles
+- `default` - Standard coding
+- `fast` - Low reasoning effort
+- `deep` - High reasoning effort
+- `qa` - Testing focused
+- `yolo` - Full auto (dangerous!)
+
+### Platform
+- Windows Sandbox: `elevated`
+- TUI Theme: `zenburn`
+
+---
+
+## Other Tools
+
+### Installed via npm -g
+
+| Tool | Package | Version | Command |
+|------|---------|---------|---------|
+| Claude Code | claude | 0.1.1 | `claude` |
+| Codex CLI | @openai/codex | 0.116.0 | `codex` |
+| Gemini CLI | @google/gemini-cli | 0.34.0 | `gemini` |
+| Qwen | @qwen-code/qwen-code | 0.12.6 | `qwen` |
+| Cline | cline | 2.8.1 | `cline` |
+| Droid | droid | 0.62.1 | `droid` |
+| Kilocode | @kilocode/cli, kilocode | 7.0.46, 1.2.0 | `kilocode` |
+| OpenCode | opencode-ai | 1.2.27 | `opencode` |
+| OpenCLAW | openclaw | 2026.3.2 | `openclaw` |
+| GitHub Copilot | @github/copilot | 0.0.421 | `copilot` |
+| Sourcegraph Amp | @sourcegraph/amp | 0.0.1771416360 | `src` |
+
+### Kiro CLI
+- Requires WSL on Windows
+- Install: `curl -fsSL https://sh.kiro.ai | sh`
+
+---
+
+## Quick Reference
+
+### Start Commands
+```bash
+# Claude Code
 claude
 
-# Start Codex
+# Codex
 codex
 
-# Start Qwen
-qwen
+# OpenCode (built-in)
+opencode
 
-# Start Gemini
+# Aider
+aider ./project
+
+# Gemini
 gemini
 
-# Start Aider
-aider ./your-project
+# Qwen (NOT qwen-code!)
+qwen
+
+# Cline
+cline
 ```
 
----
+### Environment Variables
+```bash
+# GitHub Token (for MCP servers)
+GITHUB_TOKEN=ghp_xxx
 
-## Platform Notes
-
-### Windows (Primary)
-- All tools work natively
-- Use PowerShell or Git Bash
-- Some tools may need WSL for full functionality
-
-### WSL (Secondary)
-- Kiro CLI requires WSL: `curl -fsSL https://sh.kiro.ai | sh`
-
----
-
-## Environment Variables (if needed)
-
-Some tools use API keys. Set these in your shell profile:
-
-```powershell
-# Groq (fast inference)
-$env:GROQ_API_KEY = "your-key"
-
-# OpenRouter (free models)
-$env:OPENROUTER_API_KEY = "your-key"
-
-# NVIDIA NIM
-$env:NVIDIA_API_KEY = "your-key"
-
-# Cloudflare AI
-$env:CLOUDFLARE_API_KEY = "your-key"
+# Alternative API providers
+GROQ_API_KEY=xxx
+OPENROUTER_API_KEY=xxx
+NVIDIA_API_KEY=xxx
+CLOUDFLARE_API_KEY=xxx
 ```
 
----
-
-## Profiles & Aliases
-
-Add to your PowerShell profile (`$PROFILE`):
-
+### Aliases (PowerShell)
 ```powershell
-# AI CLI shortcuts
 Set-Alias -Name cc -Value claude
 Set-Alias -Name cx -Value codex
 Set-Alias -Name qw -Value qwen
@@ -96,45 +186,15 @@ Set-Alias -Name gm -Value gemini
 
 ## Troubleshooting
 
-### "Command not found"
-```powershell
-# Check if tool is installed
-npm list -g | grep tool-name
+### Qwen Command Name
+- Use `qwen`, NOT `qwen-code` or `qwencode-cli`
 
-# Reinstall if needed
-npm install -g package-name --force
-```
+### Codex Ollama Conflict
+- If Ollama provider conflicts exist, remove `[model_providers.ollama]` from config
 
-### Qwen specifically
-```powershell
-# Command is "qwen", NOT "qwen-code" or "qwencode-cli"
-qwen --version  # Correct ✅
-qwen-code --version  # Wrong ❌
-```
-
-### Codex MCP servers failing
-If MCP servers fail due to missing API keys, they can be disabled by removing the `[mcp_servers]` section from config.
-
----
-
-## Documentation Structure
-
-```
-ai-cli-configs/
-├── README.md              # This file
-├── configs/
-│   └── codex-config.toml # Codex configuration
-├── scripts/
-│   └── set-env.ps1        # Environment variable template
-└── NOTES/
-    └── quirks.md          # Platform-specific issues
-```
-
----
-
-## Contributing
-
-Found a quirk or fix? Submit a PR!
+### Kiro on Windows
+- Requires WSL installation
+- Run in WSL terminal, not PowerShell
 
 ---
 
