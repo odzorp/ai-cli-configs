@@ -1,0 +1,87 @@
+# ================================================================
+# OpenAI Codex CLI — Config
+# ================================================================
+
+# --- Default model (Codex model with built-in provider) ---
+model = "gpt-5.4"
+
+# --- Approval policy ---
+approval_policy = "on-request"
+
+# --- Windows sandbox ---
+[windows]
+sandbox = "elevated"
+
+# --- Web search ---
+web_search = "live"
+
+# --- Personality ---
+personality = "pragmatic"
+
+# --- Reasoning effort ---
+model_reasoning_effort = "medium"
+
+# --- History compaction ---
+history_at_capacity = "summarize"
+
+# ================================================================
+# PROFILES — switch with: codex --profile <name>
+# ================================================================
+
+# Default coding profile
+[profiles.default]
+model = "gpt-5.2-codex"
+model_reasoning_effort = "medium"
+approval_policy = "on-request"
+
+# Fast reasoning profile
+[profiles.fast]
+model = "gpt-5.2-codex"
+model_reasoning_effort = "low"
+approval_policy = "on-request"
+
+# Deep reasoning (hard problems)
+[profiles.deep]
+model = "gpt-5.2-codex"
+model_reasoning_effort = "high"
+approval_policy = "on-request"
+
+# QA / testing profile
+[profiles.qa]
+model = "gpt-5.2-codex"
+model_reasoning_effort = "high"
+approval_policy = "on-request"
+web_search = "live"
+
+# Full auto (dangerous — use in isolated environments only)
+[profiles.yolo]
+model = "gpt-5.2-codex"
+approval_policy = "never"
+web_search = "live"
+
+# ================================================================
+# SHELL ENVIRONMENT
+# ================================================================
+
+[shell_environment_policy]
+include_only = [
+  "PATH",
+  "HOME",
+  "USERPROFILE"
+]
+
+# ================================================================
+# FEATURES
+# ================================================================
+
+[features]
+shell_snapshot = true
+
+[projects.'C:\Users\PhilipOdzor']
+trust_level = "trusted"
+
+[notice.model_migrations]
+"gpt-5.2-codex" = "gpt-5.4"
+
+[tui]
+theme = "zenburn"
